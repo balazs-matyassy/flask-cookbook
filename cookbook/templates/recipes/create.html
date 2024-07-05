@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% set title = 'Create recipe' %}
+{% set confirm_message = 'Create message?' %}
+
+{% block content %}
+    <h1>Create recipe</h1>
+
+    {% include 'recipes/_form.html' %}
+{% endblock %}

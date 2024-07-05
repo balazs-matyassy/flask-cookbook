@@ -1,0 +1,42 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Unit</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ingredient in recipe.ingredients %}
+        <tr class="{{ 'table-primary' if ingredient.id == ingredient_id else '' }}">
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.quantity }}</td>
+            <td>{{ ingredient.unit }}</td>
+            <td>
+                <a href="{{ url_for('recipes.edit_ingredient', recipe_id=recipe.id, ingredient_id=ingredient.id) }}"
+                   class="btn btn-primary">
+                    Edit
+                </a>
+            </td>
+            <td>
+                <form method="post"
+                      action="{{ url_for('recipes.delete_ingredient'
+                            , recipe_id=recipe.id, ingredient_id=ingredient.id) }}">
+                    <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete ingredient?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div>
+    <a href="{{ url_for('recipes.create_ingredient', recipe_id=recipe.id) }}" class="btn btn-primary">
+        Create ingredient
+    </a>
+</div>

@@ -1,0 +1,39 @@
+<div class="row">
+    {% for image in recipe.images %}
+        <div class="col-lg-6 text-center">
+            <a href="{{ url_for('recipes.download_image', recipe_id=recipe.id, image_id=image.id) }}"
+               target="_blank">
+                <img src="{{ url_for('recipes.download_image', recipe_id=recipe.id, image_id=image.id) }}"
+                     alt="{{ image.filename }}"
+                     width="320"
+                     class="img-thumbnail">
+            </a>
+            <br>
+            <form method="post"
+                  action="{{ url_for('recipes.delete_image', recipe_id=recipe.id, image_id=image.id) }}">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Delete image?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+<form action="{{ url_for('recipes.upload_image', recipe_id=recipe.id) }}"
+      method="post"
+      enctype="multipart/form-data">
+    <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+    <div class="mb-3">
+        <label for="file" class="form-label">Image</label>
+        <input name="file"
+               type="file"
+               accept="image/png, image/gif, image/jpeg"
+               class="form-control"
+               id="file"
+               onchange="this.form.submit()"
+               required>
+    </div>
+</form>

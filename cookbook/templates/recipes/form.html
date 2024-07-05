@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% set title = 'Create' if create else 'Edit' + ' recipe' %}
+
+{% block content %}
+    <h1>{{ 'Create' if create else 'Edit' }} recipe</h1>
+
+    <form method="post">
+        {{ form.csrf_token }}
+
+        <div class="mb-3">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-control") }}
+            {% if form.category.errors %}
+                <ul>
+                    {% for error in form.category.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            {% if form.name.errors %}
+                <ul>
+                    {% for error in form.name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+            {% if form.description.errors %}
+                <ul>
+                    {% for error in form.description.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.difficulty.label(class="form-label") }}
+            {{ form.difficulty(class="form-control") }}
+            {% if form.difficulty.errors %}
+                <ul>
+                    {% for error in form.difficulty.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                {% if create %}
+                    {{ form.submit(class="btn btn-primary", onclick="return confirm('Create recipe?')") }}
+                {% else %}
+                    {{ form.submit(class="btn btn-primary", onclick="return confirm('Save recipe?')") }}
+                {% endif %}
+            </div>
+            <div class="col-auto">
+                <a href="{{ url_for('recipes.list_all') }}" class="btn btn-secondary">Close</a>
+            </div>
+        </div>
+    </form>
+
+    {% if recipe %}
+        <h2>Ingredients</h2>
+
+        {% include 'recipes/_ingredient_list.html' %}
+
+        {% if not create %}
+            <div>
+                <a href="{{ url_for('recipes.create_ingredient', recipe_id=recipe.id) }}" class="btn btn-primary">
+                    Create ingredient
+                </a>
+            </div>
+        {% endif %}
+
+        <h2>Images</h2>
+
+        <div class="row">
+            {% for image in recipe.images %}
+                <div class="col-lg-4 text-center">
+                    <a href="{{ url_for('recipes.download_image', recipe_id=recipe.id, image_id=image.id) }}"
+                       target="_blank">
+                        <img src="{{ url_for('recipes.download_image', recipe_id=recipe.id, image_id=image.id) }}"
+                             alt="{{ image.filename }}"
+                             width="320"
+                             class="img-thumbnail">
+                    </a>
+                    <br>
+                    <form method="post"
+                          action="{{ url_for('recipes.delete_image', recipe_id=recipe.id, image_id=image.id) }}">
+                        <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Delete image?')">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form action="{{ url_for('recipes.upload_image', recipe_id=recipe.id) }}"
+              method="post"
+              enctype="multipart/form-data">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+            <div class="mb-3">
+                <label for="file" class="form-label">Image</label>
+                <input name="file"
+                       type="file"
+                       accept="image/png, image/gif, image/jpeg"
+                       class="form-control"
+                       id="file"
+                       aria-describedby="file"
+                       required>
+            </div>
+
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('Upload image?')">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

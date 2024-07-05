@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% set title = 'Edit profile' %}
+
+{% block content %}
+    <h1>Edit profile</h1>
+
+    <form method="post">
+        {{ form.csrf_token }}
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text"
+                   class="form-control"
+                   id="username"
+                   value="{{ user.username }}"
+                   disabled>
+        </div>
+
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+                <ul>
+                    {% for error in form.password.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.confirm_password.label(class="form-label") }}
+            {{ form.confirm_password(class="form-control") }}
+            {% if form.confirm_password.errors %}
+                <ul>
+                    {% for error in form.confirm_password.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="role_id" class="form-label">Role</label>
+            <select class="form-control" id="role_id" disabled>
+                <option>
+                    {{ user.role.name }}
+                </option>
+            </select>
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                {{ form.submit(class="btn btn-primary", onclick="return confirm('Save profile?')") }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

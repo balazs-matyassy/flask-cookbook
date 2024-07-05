@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% set title = 'Create category' %}
+{% set confirm_message = 'Create category?' %}
+
+{% block content %}
+    <h1>Create category</h1>
+
+    {% include 'categories/_form.html' %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% set title = 'Edit user' %}
+{% set confirm_message = 'Save user?' %}
+
+{% block content %}
+    <h1>Edit user</h1>
+
+    {% include 'users/_form.html' %}
+{% endblock %}

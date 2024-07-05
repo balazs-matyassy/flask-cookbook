@@ -1,0 +1,48 @@
+<form method="post">
+    {{ form.csrf_token }}
+
+    <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control") }}
+        {% if form.name.errors %}
+            <ul>
+                {% for error in form.name.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.quantity.label(class="form-label") }}
+        {{ form.quantity(class="form-control") }}
+        {% if form.quantity.errors %}
+            <ul>
+                {% for error in form.quantity.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.unit.label(class="form-label") }}
+        {{ form.unit(class="form-control") }}
+        {% if form.unit.errors %}
+            <ul>
+                {% for error in form.unit.errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            {{ form.submit(class="btn btn-primary", onclick="return confirm('" ~ confirm_message ~ "')") }}
+        </div>
+        <div class="col-auto">
+            <a href="{{ url_for('recipes.edit', recipe_id=recipe.id) }}" class="btn btn-secondary">Close</a>
+        </div>
+    </div>
+</form>

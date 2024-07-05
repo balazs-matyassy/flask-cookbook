@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% set title = 'Edit category' %}
+{% set mode = 'Save category?' %}
+
+{% block content %}
+    <h1>Edit category</h1>
+
+    {% include 'categories/_form.html' %}
+{% endblock %}

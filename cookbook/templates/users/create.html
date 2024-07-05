@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% set title = 'Create user' %}
+{% set confirm_message = 'Create user?' %}
+
+{% block content %}
+    <h1>Create user</h1>
+
+    {% include 'users/_form.html' %}
+{% endblock %}

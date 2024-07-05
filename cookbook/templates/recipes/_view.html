@@ -1,0 +1,31 @@
+<div class="mb-3">
+    <label for="category_id" class="form-label">Category</label>
+    <select class="form-control" id="category_id" disabled>
+        <option selected>
+            {{ recipe.category.name }}
+        </option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text"
+           class="form-control"
+           id="name"
+           value="{{ recipe.name }}"
+           disabled>
+</div>
+
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control"
+              id="description"
+              disabled>{{ recipe.description }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="difficulty" class="form-label">Difficulty</label>
+    <select class="form-control" id="difficulty" disabled>
+        <option>{{ '★' * recipe.difficulty }}{{ '☆' * (5 - recipe.difficulty) }}</option>
+    </select>
+</div>

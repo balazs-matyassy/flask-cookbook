@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% set title = 'Login' %}
+
+{% block content %}
+    <h1>Login</h1>
+
+    <form method="post">
+        {{ form.csrf_token }}
+
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+            {% if form.username.errors %}
+                <ul>
+                    {% for error in form.username.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+                <ul>
+                    {% for error in form.password.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </div>
+    </form>
+{% endblock %}
